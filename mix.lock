@@ -1,6 +1,0 @@
-%{"hackney": {:hex, :hackney, "1.0.6"},
-  "httpoison": {:hex, :httpoison, "0.6.2"},
-  "idna": {:hex, :idna, "1.0.2"},
-  "poison": {:git, "git://github.com/devinus/poison.git", "0e7a4dc12d6f80bf110c43cba398371d2d277077", []},
-  "ssl_verify_hostname": {:hex, :ssl_verify_hostname, "1.0.1"},
-  "timex": {:hex, :timex, "0.13.3"}}

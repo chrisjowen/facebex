@@ -1,0 +1,10 @@
+{application,facebook_sdk,
+             [{registered,[]},
+              {description,"facebook_sdk"},
+              {applications,[kernel,stdlib,elixir,logger,httpoison]},
+              {vsn,"0.0.1"},
+              {modules,['Elixir.FacebookSDK','Elixir.FacebookSDK.API.Base',
+                        'Elixir.FacebookSDK.API.Group',
+                        'Elixir.FacebookSDK.AccessToken',
+                        'Elixir.FacebookSDK.Config',
+                        'Elixir.FacebookSDK.Supervisor']}]}.

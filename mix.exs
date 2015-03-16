@@ -12,7 +12,10 @@ defmodule FacebookSdk.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [applications: [:logger, :httpoison]]
+    [
+      applications: [:logger, :httpoison],
+      mod: {FacebookSDK, []}
+    ]
   end
 
   # Dependencies can be Hex packages:
@@ -28,7 +31,8 @@ defmodule FacebookSdk.Mixfile do
     [
         {:poison, "~> 1.3", github: "devinus/poison"},
         {:httpoison, "~> 0.6"},
-        {:timex, "~> 0.13.3"}
+        {:timex, "~> 0.13.3"},
+        {:dexts, "0.2.0"}
     ]
   end
 end

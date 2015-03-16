@@ -7,7 +7,6 @@ defmodule FacebookSDK.AccessToken do
     def verify([]) do
         raise "api calls require at minimum appId and appSecret"
     end
-
     def verify(params) do
        if  ! ( is_binary(params[:appId]) && is_binary(params[:appSecret]) ) do
             raise "appId and appSecret settings need to be set as binary strings"
@@ -25,13 +24,16 @@ defmodule FacebookSDK.AccessToken do
        result = HTTPoison.get(url)
 
        case parseResult(result) do
-            {:ok, [token, expires]} -> FacebookSDK.configure([extendedToken: token,  tokenExpires: Time.now(:secs) + String.to_integer(expires)])
+            {:ok, [token, expires]} ->
+                FacebookSDK.configure([extendedToken: token,  tokenExpires: Time.now(:secs) + String.to_integer(expires)])
+                FacebookSDK.Config.persist(:extendedToken); 
+                FacebookSDK.Config.persist(:tokenExpires); 
             {:error, reason} -> raise "facebook oauth extend error" <> reason
        end
 
     end
 
-    def getToken do
+    def getTokenString do
                case FacebookSDK.configure![:extendedToken] do
                    nil ->
                        token = FacebookSDK.configure![:userAccessToken]

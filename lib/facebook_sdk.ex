@@ -3,6 +3,7 @@ defmodule FacebookSDK do
     use Application
 
     def start(_type, _start) do
+        FacebookSDK.Config.load
         FacebookSDK.Supervisor.start_link
     end
 

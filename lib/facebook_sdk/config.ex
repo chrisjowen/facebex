@@ -1,21 +1,31 @@
 defmodule FacebookSDK.Config do
 
+    @default_path "/tmp/config.dict.bin"
+
     def get do
         :application.get_env(:facebook_sdk, :security)
+    end
+    def get(name) do
+        {:ok, get![name]}
     end
 
     def get! do
         case get do
             {:ok, settings} -> settings
             nil -> {:error, "settings missing"}
+            :undefined -> {}
         end
 
     end
 
     def configure(settings) do
-        :application.set_env(:facebook_sdk, :security, settings)
-    end
 
+        case get do 
+            :undefined -> :application.set_env(:facebook_sdk, :security, settings)
+            {:ok, list} -> :application.set_env(:facebook_sdk, :security, list ++ settings)
+        end
+
+    end
     def configure(setting, value) do
 
         case get do
@@ -31,4 +41,41 @@ defmodule FacebookSDK.Config do
             :undefined -> "2.2"
         end
     end
+
+    def load do
+      table = getDexts
+      Dexts.keys(table) |> Enum.each(fn(key) ->
+        [{key,value}] = Dexts.read(table,key)
+        configure(key,value)
+        end)
+    end
+
+    def persist(name) do
+       if(get![name]) do
+            table = getDexts
+            Dexts.write(table, {name, get![name]})
+            Dexts.save table
+       end
+    end
+
+    defp getDexts do
+        if is_binary(get![:storage_path]) do
+            configPath = get![:storage_path]
+        else 
+            configPath = @default_path
+        end  
+
+        if File.exists?(configPath)  do
+            case Dexts.open(configPath) do
+                {:ok, name} -> name
+                {:error, reason} -> :logger.error(reason)
+            end
+        else
+             case  Dexts.new("perm_config", [path: configPath, type: :set]) do
+                 {:ok, name} -> name
+                 {:error, reason} -> :logger.error(reason)
+             end
+        end
+    end
+
 end

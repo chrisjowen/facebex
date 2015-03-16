@@ -1,0 +1,33 @@
+defmodule FacebookSDK.Model.Post do
+	
+	defstruct id: nil, 
+	actions: [], 
+	application: nil,
+	call_to_action: nil,
+	caption: nil,
+	created_time: nil,
+	description: nil,
+	feed_targeting: nil,
+	from: nil,
+	icon: nil,
+	is_hidden: nil,
+	link: nil,
+	message: nil,
+	message_tags: nil,
+	name: nil, 
+	object_id: nil, 
+	picture: nil, 
+	place: nil, 
+	privacy: nil,
+	properties: [], 
+	shares: nil,
+	source: nil, 
+	status_type: nil,
+	story: nil,
+	story_tags: nil,
+	to: [],
+	type: nil,
+	updated_time: nil, 
+	with_tags: nil
+
+end

@@ -1,6 +1,5 @@
 defmodule FacebookSdkTest do
   use ExUnit.Case
-
   setup do
         Application.delete_env(:facebook_sdk, :security)
   end

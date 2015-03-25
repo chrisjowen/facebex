@@ -1,2 +1,2 @@
 # facebex
-Full implementation for communicating with Faccebook Graph API
+Full implementation for communicating with Facebook Graph API

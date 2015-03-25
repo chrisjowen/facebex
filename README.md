@@ -1,2 +1,2 @@
-# exFacebookSDK
-Facebook SDK using elixir client...work in progress
+# facebex
+Full implementation for communicating with Faccebook Graph API

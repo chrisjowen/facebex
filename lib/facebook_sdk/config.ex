@@ -1,6 +1,6 @@
 defmodule FacebookSDK.Config do
 
-    @default_path "/tmp/config.dict.bin"
+    @default_path "/var/tmp/config.dict.bin"
 
     def get do
         :application.get_env(:facebook_sdk, :security)
@@ -27,12 +27,7 @@ defmodule FacebookSDK.Config do
 
     end
     def configure(setting, value) do
-
-        case get do
-            :undefined -> configure([{setting, value}])
-            {:ok, list} -> configure(list ++ [{setting, value}])
-        end
-
+        configure([{setting, value}])
     end
 
     def version do
@@ -44,7 +39,7 @@ defmodule FacebookSDK.Config do
 
     def load do
       table = getDexts
-      Dexts.keys(table) |> Enum.each(fn(key) ->
+      Dexts.keys(table) |> Enum.each(fn(key) -> 
         [{key,value}] = Dexts.read(table,key)
         configure(key,value)
         end)
@@ -58,7 +53,7 @@ defmodule FacebookSDK.Config do
        end
     end
 
-    defp getDexts do
+    def getDexts do
         if is_binary(get![:storage_path]) do
             configPath = get![:storage_path]
         else 
@@ -71,7 +66,7 @@ defmodule FacebookSDK.Config do
                 {:error, reason} -> :logger.error(reason)
             end
         else
-             case  Dexts.new("perm_config", [path: configPath, type: :set]) do
+             case Dexts.new("perm_config", [path: configPath]) do
                  {:ok, name} -> name
                  {:error, reason} -> :logger.error(reason)
              end

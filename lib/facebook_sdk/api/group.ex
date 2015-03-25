@@ -3,11 +3,9 @@ defmodule FacebookSDK.API.Group do
     alias FacebookSDK.AccessToken, as: Session
     import FacebookSDK.API.Base
 
-
     def group(id) do
-    	#url = endpoint(to_string(id)) <> Session.getToken
-    	#response = HTTPoison.get!(endpoint <> Session.getToken)
-    	#response 
+    	url = endpoint(to_string(id)) <> Session.getTokenString
+        makeRequest(url)
     end
 
     def groupfeed(id) do

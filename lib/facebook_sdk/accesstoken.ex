@@ -1,6 +1,7 @@
 defmodule FacebookSDK.AccessToken do
 
     use Timex
+    alias FacebookSDK.Config, as: Config
 
     @authurl "https://graph.facebook.com/oauth/access_token"
 
@@ -16,8 +17,8 @@ defmodule FacebookSDK.AccessToken do
 
     def extend do
 
-       if ! is_binary(FacebookSDK.configure![:userAccessToken]) do
-            raise "user access token is required to be setup to extend the token"
+       if ! is_binary(Config.get![:userAccessToken])  && ! is_binary(Config.get![:extendedToken]) do
+            raise "user access token / extended toen  is required to be setup to extend the token"
        end
 
        url = @authurl <> "?" <> buildParams
@@ -45,15 +46,26 @@ defmodule FacebookSDK.AccessToken do
 
     defp buildParams do
         verify(FacebookSDK.configure!) ++ [{:grant_type,"fb_exchange_token"}]
-        |> Enum.map(fn({k,v}) -> translate({k,v}) end) |> Enum.join("&")
+          |> Enum.map(fn({k,v}) -> 
+                translate({k,v}) 
+             end) 
+          |> Enum.filter(fn(x) -> 
+                case x do 
+                  nil -> false
+                  _ -> true
+                end
+             end)
+          |> Enum.join("&")
     end
 
     defp translate({k,v}) do
         case k do
             :appId -> "client_id=#{v}"
             :appSecret -> "client_secret=#{v}"
-            :userAccessToken -> "fb_exchange_token=#{v}"
-            _ -> to_string(k) <> "=#{v}"
+            :grant_type -> "grant_type=fb_exchange_token"
+            :extendedToken -> "fb_exchange_token=#{v}"
+            :userAccessToken -> if Config.get![:extendedToken], do: "fb_exchange_token=#{v}"
+            _ -> nil
         end
     end
 

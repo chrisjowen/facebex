@@ -32,7 +32,8 @@ defmodule FacebookSdk.Mixfile do
         {:poison, "~> 1.3", github: "devinus/poison"},
         {:httpoison, "~> 0.6"},
         {:timex, "~> 0.13.3"},
-        {:dexts, "0.2.0"}
+        {:dexts, "0.2.0"},
+	{:amnesia, "0.2.0", github: "meh/amnesia"}
     ]
   end
 end

@@ -26,18 +26,4 @@ defmodule Facebex do
     @spec configure :: (Keyword.t) | nil
     defdelegate configure!(), to: Facebex.Config, as: :get!
 
-    defp getPermToken do
-        case Facebex.configure![:extendedToken] do
-            nil -> 
-                spawn(Facebex.AccessToken, :extend, []) 
-            x -> 
-                cond do
-                    is_number(Facebex.Config.get![:tokenExpires]) && Facebex.Config.get![:tokenExpires] < Time.now(:secs) -> 
-                        spawn(Facebex.AccessToken, :extend, [])
-                    true -> nil
-                end
-
-        end
-    end
-
 end

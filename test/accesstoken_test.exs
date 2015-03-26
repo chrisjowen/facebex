@@ -1,7 +1,7 @@
 defmodule AccessTokenTest do
     use ExUnit.Case
 
-    alias FacebookSDK.AccessToken, as: AccessToken
+    alias Facebex.AccessToken, as: AccessToken
 
     test "verify will throw an error if accesstoken,appId,appSecret are empty" do
         assert catch_error(AccessToken.verify([])) == %RuntimeError{message: "api calls require at minimum appId and appSecret"}

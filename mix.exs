@@ -1,8 +1,8 @@
-defmodule FacebookSdk.Mixfile do
+defmodule Facebex.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :facebook_sdk,
+    [app: :facebex,
      version: "0.0.1",
      elixir: "~> 1.0",
      deps: deps]
@@ -14,7 +14,7 @@ defmodule FacebookSdk.Mixfile do
   def application do
     [
       applications: [:logger, :httpoison],
-      mod: {FacebookSDK, []}
+      mod: {Facebex, []}
     ]
   end
 
@@ -32,8 +32,7 @@ defmodule FacebookSdk.Mixfile do
         {:poison, "~> 1.3", github: "devinus/poison"},
         {:httpoison, "~> 0.6"},
         {:timex, "~> 0.13.3"},
-        {:dexts, "0.2.0"},
-	{:amnesia, "0.2.0", github: "meh/amnesia"}
+        {:dexts, "0.2.0"}
     ]
   end
 end

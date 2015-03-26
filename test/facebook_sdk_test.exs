@@ -1,51 +1,51 @@
-defmodule FacebookSdkTest do
+defmodule FacebexTest do
   use ExUnit.Case
   setup do
-        Application.delete_env(:facebook_sdk, :security)
+        Application.delete_env(:facebex, :security)
   end
 
   test "test our application is started" do
-    assert  {:error, {:already_started, :facebook_sdk}} == Application.start(:facebook_sdk)
+    assert  {:error, {:already_started, :facebex}} == Application.start(:facebex)
   end
 
   test "test we can set security settings using the application" do
-    assert FacebookSDK.configure([
+    assert Facebex.configure([
         appId: 12331,
         appSecret: "ab123b2d123411"
     ]) == :ok
   end
 
   test "test we can get security settigns using application" do
-        FacebookSDK.configure([
+        Facebex.configure([
             appId: 12331,
             appSecret: "ab123b2d123411"
         ])
-        assert FacebookSDK.configure == {:ok, [appId: 12331, appSecret: "ab123b2d123411"]}
+        assert Facebex.configure == {:ok, [appId: 12331, appSecret: "ab123b2d123411"]}
   end
 
   test "we can add a access token to existing configuration" do
-        FacebookSDK.configure([
+        Facebex.configure([
             appId: 12331,
             appSecret: "ab123b2d123411"
         ])
 
-        assert FacebookSDK.configure(:accessToken, "123231-1232-232321-12332") == :ok
-        assert FacebookSDK.configure == {:ok, [appId: 12331, appSecret: "ab123b2d123411", accessToken: "123231-1232-232321-12332"]}
+        assert Facebex.configure(:accessToken, "123231-1232-232321-12332") == :ok
+        assert Facebex.configure == {:ok, [appId: 12331, appSecret: "ab123b2d123411", accessToken: "123231-1232-232321-12332"]}
   end
 
   test "when setting a config setting that does not exist will lazy load keyword list" do
-        assert FacebookSDK.configure(:accessToken, "123231-1232-232321-12332") == :ok
-        assert FacebookSDK.configure == {:ok, [accessToken: "123231-1232-232321-12332"]}
+        assert Facebex.configure(:accessToken, "123231-1232-232321-12332") == :ok
+        assert Facebex.configure == {:ok, [accessToken: "123231-1232-232321-12332"]}
   end
 
   test "access value directly from get" do
-        FacebookSDK.configure([
+        Facebex.configure([
             appId: 12331,
             appSecret: "ab123b2d123411"
         ])
 
-        assert FacebookSDK.configure![:appId] == 12331
-        assert FacebookSDK.configure![:accessToken] == nil
+        assert Facebex.configure![:appId] == 12331
+        assert Facebex.configure![:accessToken] == nil
   end
 
 end

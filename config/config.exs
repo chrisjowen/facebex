@@ -1,6 +1,6 @@
 use Mix.Config 
 
-config :facebook_sdk, :security, 
+config :facebex, :security, 
 	storage_path:  "/var/tmp/config.dict.bin",
 	userAccessToken: "CAAL02WdqN2EBADj3uy3YbZASPQcGfXJR4pOgkX8X7yJyvvqyHG17n"
 	<> "cLPrXO3ev00Cng1xjPWz9H82PxgX00OJnj5ihSR1sq48AsTvIlGHqcXGc0QbdnT3uofM2XxEQo9lYf1YsrGyRLSx"

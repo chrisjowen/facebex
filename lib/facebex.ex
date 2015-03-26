@@ -5,8 +5,7 @@ defmodule Facebex do
 
     def start(_type, _start) do    
         Facebex.Config.load
-        getPermToken
-
+        Facebex.AccessToken.getPermToken
         Facebex.Supervisor.start_link
     end
 

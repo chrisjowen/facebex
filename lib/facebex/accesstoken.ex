@@ -44,6 +44,20 @@ defmodule Facebex.AccessToken do
              "?access_token=" <> token
            end
 
+    def getPermToken do
+        case Facebex.configure![:extendedToken] do
+            nil -> 
+                spawn(Facebex.AccessToken, :extend, []) 
+            x -> 
+                cond do
+                    is_number(Facebex.Config.get![:tokenExpires]) && Facebex.Config.get![:tokenExpires] < Time.now(:secs) -> 
+                        spawn(Facebex.AccessToken, :extend, [])
+                    true -> nil
+                end
+
+        end
+    end
+
     defp buildParams do
         verify(Facebex.configure!) ++ [{:grant_type,"fb_exchange_token"}]
           |> Enum.map(fn({k,v}) -> 

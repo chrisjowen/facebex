@@ -5,16 +5,24 @@ defmodule Facebex.API.Base do
 	alias Facebex.AccessToken, as: Session
 	alias Facebex.Config, as: Config
 
-    def endpoint(url) do
-    	[@facebook_url,"v",Config.version,"/",url] |> Enum.join 
+    def endpoint(url, suffix \\ "", params \\ []) do
+      if length params do
+        query_params =  params 
+         |> Enum.map(fn({k,v}) -> "&#{k}=#{v}" end)
+      else 
+        query_params = ""
+      end
+    	[@facebook_url,"v",Config.version,"/",url,suffix,Session.getTokenString,query_params]  
+       |> Enum.join 
     end
 
-    def makeRequest(url) do
+    def get(url) do      
     	case HTTPoison.get(url, keys: :atoms) do
-    		{:ok, response} -> 
+        {:ok, response} -> 
     			process(response)
+
     		{:error, response} ->
-    			raise %Facebex.Error{ 
+          raise %Facebex.Error{ 
     				message: "error fetching a response: " <> to_string(response.reason)
     			}
     	end 
@@ -22,10 +30,11 @@ defmodule Facebex.API.Base do
 
    	def process(response) do
    		body = Poison.Parser.parse!(response.body, keys: :atoms)
-   		IO.inspect Map.get(body, :error)
+ 
    		case Map.get(body, :error, nil) do
    			nil ->
    				response
+ 
    			error ->
    				raise %Facebex.Error{
    					message: error.type <> ": " <> error.message,

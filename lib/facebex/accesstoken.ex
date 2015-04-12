@@ -17,7 +17,7 @@ defmodule Facebex.AccessToken do
 
     def extend do
 
-       if ! is_binary(Config.get![:userAccessToken])  && ! is_binary(Config.get![:extendedToken]) do
+       if ! is_binary(Config.get(:userAccessToken))  && ! is_binary(Config.get(:extendedToken)) do
             raise "user access token / extended toen  is required to be setup to extend the token"
        end
 
@@ -26,40 +26,39 @@ defmodule Facebex.AccessToken do
 
        case parseResult(result) do
             {:ok, [token, expires]} ->
-                Facebex.configure([extendedToken: token,  tokenExpires: Time.now(:secs) + String.to_integer(expires)])
-                Facebex.Config.persist(:extendedToken); 
-                Facebex.Config.persist(:tokenExpires); 
+                Config.set([extendedToken: token,  tokenExpires: Time.now(:secs) + String.to_integer(expires)])
+                Config.persist(:extendedToken); 
+                Config.persist(:tokenExpires); 
             {:error, reason} -> raise "facebook oauth extend error" <> reason
        end
 
     end
 
     def getTokenString do
-               case Facebex.configure![:extendedToken] do
-                   nil ->
-                       token = Facebex.configure![:userAccessToken]
-                   _ ->
-                       token = Facebex.configure![:extendedToken]
-               end
-             "?access_token=" <> token
-           end
+      case Config.get(:extendedToken) do
+        nil ->
+          token = Config.get(:userAccessToken)
+        _ ->
+          token = Config.get(:extendedToken)
+        end
+      "?access_token=" <> token
+    end
 
     def getPermToken do
-        case Facebex.configure![:extendedToken] do
-            nil -> 
-                spawn(Facebex.AccessToken, :extend, []) 
-            x -> 
-                cond do
-                    is_number(Facebex.Config.get![:tokenExpires]) && Facebex.Config.get![:tokenExpires] < Time.now(:secs) -> 
-                        spawn(Facebex.AccessToken, :extend, [])
-                    true -> nil
-                end
-
-        end
+      case Config.get(:extendedToken) do
+        nil -> 
+          spawn(Facebex.AccessToken, :extend, []) 
+        _ -> 
+          cond do
+            is_number(Config.get(:tokenExpires)) && Config.get(:tokenExpires) < Time.now(:secs) -> 
+              spawn(Facebex.AccessToken, :extend, [])
+            true -> nil
+          end
+      end
     end
 
     defp buildParams do
-        verify(Facebex.configure!) ++ [{:grant_type,"fb_exchange_token"}]
+        verify(Config.get) ++ [{:grant_type,"fb_exchange_token"}]
           |> Enum.map(fn({k,v}) -> 
                 translate({k,v}) 
              end) 
@@ -78,7 +77,7 @@ defmodule Facebex.AccessToken do
             :appSecret -> "client_secret=#{v}"
             :grant_type -> "grant_type=fb_exchange_token"
             :extendedToken -> "fb_exchange_token=#{v}"
-            :userAccessToken -> if Config.get![:extendedToken], do: "fb_exchange_token=#{v}"
+            :userAccessToken -> if Config.get(:extendedToken), do: "fb_exchange_token=#{v}"
             _ -> nil
         end
     end

@@ -1,5 +1,4 @@
 defmodule Facebex.API.Group do
-
     import Facebex.API.Base
 
     def group(id) do

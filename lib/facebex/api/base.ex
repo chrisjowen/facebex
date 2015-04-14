@@ -12,8 +12,10 @@ defmodule Facebex.API.Base do
       else 
         query_params = ""
       end
+
     	[@facebook_url,"v",Config.version,"/",url,suffix,Session.getTokenString,query_params]  
        |> Enum.join 
+       |> URI.encode 
     end
 
     def get(url) do      
@@ -34,7 +36,6 @@ defmodule Facebex.API.Base do
    		case Map.get(body, :error, nil) do
    			nil ->
    				response
- 
    			error ->
    				raise %Facebex.Error{
    					message: error.type <> ": " <> error.message,

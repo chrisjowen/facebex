@@ -10,7 +10,6 @@ defmodule Facebex.API.Group do
     def feed(id) do
         url = endpoint(to_string(id),"/feed")
         response = get(url)
-        IO.inspect response
         Poison.decode!(response.body, keys: :atoms)[:data] 
          |> Enum.map(fn(post) -> struct(Facebex.Model.Post, post) end )
     end 

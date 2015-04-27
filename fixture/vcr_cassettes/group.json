@@ -1,0 +1,34 @@
+[
+  {
+    "request": {
+      "body": "",
+      "headers": {
+        "keys": "atoms"
+      },
+      "method": "get",
+      "options": {
+        "connect_timeout": 5000
+      },
+      "url": "https://graph.facebook.com/v2.2/1540432296222124?access_token=CAAL02WdqN2EBALkDbS8h8aZC9R7ZCsIHQ9ASQb76C30KjVBlFfZApZACFVO58bknZAjxFxh4K8ZAGgPlROt7nwYW8BXzZBPZAqEZCRkoMxaCUEAiPrFY07bZBIZCtcWWrMK2tZCaZCUGhYhamiwksoH3T5qZCJYvosZC4ZB1hK6OZAera4ENtIZBYiXflKpkvz"
+    },
+    "response": {
+      "body": "{\"email\":\"1540432296222124\\u0040groups.facebook.com\",\"icon\":\"https:\\/\\/fbstatic-a.akamaihd.net\\/rsrc.php\\/v2\\/yM\\/r\\/tOv73myJSBM.png\",\"name\":\"South Charlotte Buy\\/Sell Market\",\"owner\":{\"id\":\"10153012381515129\",\"name\":\"Ben Carter\"},\"privacy\":\"CLOSED\",\"updated_time\":\"2015-03-08T06:56:01+0000\",\"id\":\"1540432296222124\"}",
+      "headers": {
+        "Content-Type": "text/javascript; charset=UTF-8",
+        "Access-Control-Allow-Origin": "*",
+        "X-FB-Rev": "1706602",
+        "ETag": "\"5c1f578c9e3841383e8b2c391fb78cbfd3b4d535\"",
+        "Pragma": "no-cache",
+        "Cache-Control": "private, no-cache, no-store, must-revalidate",
+        "Facebook-API-Version": "v2.2",
+        "Expires": "Sat, 01 Jan 2000 00:00:00 GMT",
+        "X-FB-Debug": "Vegx9kz/0/3r39DqUAPEX+0BEPYWFkwVeGxN2wFvRAfjB4kGqYKHhahetpIef1wTlYF6Y6xMTq5mAa8WdkjA4w==",
+        "Date": "Sat, 25 Apr 2015 00:36:18 GMT",
+        "Connection": "keep-alive",
+        "Content-Length": "316"
+      },
+      "status_code": 200,
+      "type": "ok"
+    }
+  }
+]

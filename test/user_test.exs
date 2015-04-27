@@ -6,7 +6,7 @@ defmodule ConfigTest do
   end
 
   test "lookup with full details" do
-  	IO.inspect Facebex.API.User.search_by_name("Ben Carter", :full_user)
+  #	IO.inspect Facebex.API.User.search_by_name("Ben Carter", :full_user)
   end
 
 end

@@ -1,5 +1,12 @@
 defmodule FacebexTest do
-  use ExUnit.Case
+  use ExVCR.Mock, adapter: ExVCR.Adapter.Hackney
+  use ExUnit.Case, async: false
+
+
+  setup_all do
+    ExVCR.Config.cassette_library_dir("fixture/vcr_cassettes")
+    :ok
+  end
 
   test "test our application is started" do
     assert  {:error, {:already_started, :facebex}} == Application.start(:facebex)
@@ -39,9 +46,30 @@ defmodule FacebexTest do
   end
 
   test "test we can get a known group" do
-    result =  Facebex.group(1540432296222124)
-    assert "South Charlotte Buy/Sell Market" === result.name
-    assert  %{"id" => "10153012381515129", "name" => "Ben Carter"} === result.owner
+    use_cassette "group" do
+      result =  Facebex.group(1540432296222124)
+      assert "South Charlotte Buy/Sell Market" === result.name
+      assert  %{"id" => "10153012381515129", "name" => "Ben Carter"} === result.owner
+    end
+  end
+
+  test "test we can get a group feed" do 
+    
+    use_cassette "groupfeed" do 
+      result = Facebex.group_feed(1540432296222124)
+      assert length(result) === 6
+      post = List.last(result)
+
+      assert "Ben Carter created the group South Charlotte Buy/Sell Market." === post.story
+      assert "status" === post.type
+      assert "2015-02-27T04:36:00+0000" === post.updated_time
+    end
+
+  end
+
+  test "test we can get group events" do
+    result = Facebex.group_events(1540432296222124) 
+    IO.inspect result
   end
 
 end

@@ -29,9 +29,9 @@ defmodule Facebex.Mixfile do
   # Type `mix help deps` for more examples and options
   defp deps do
     [
-      {:poison, "~> 1.3", github: "devinus/poison"},
-      {:httpoison, "~> 0.6"},
-      {:timex, "~> 0.13.3"},
+      {:poison, "~> 1.5"},
+      {:httpoison, "~> 0.7"},
+      {:timex,">= 0.19.2"},
       {:dexts, "0.2.0"},
       {:exvcr, "~> 0.3", only: [:dev, :test]}
     ]
